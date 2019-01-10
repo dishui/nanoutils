@@ -1182,6 +1182,32 @@ dropWhileLess3([1, 2, 3, 4]) // [3, 4]
 Always returns a copy of `string` or `array`
 :::
 
+## `dropWhileT`
+
+Creates a `drop`-like transducer with a given predicate
+
+```js
+import { dropWhileT } from 'nanoutils'
+
+const transducer = dropWhileT(value => value < 3)
+const dropsBankAccountsLessThan3 = transducer((bank, value) => {
+  array.push(value)
+  return array
+})
+
+dropsBankAccountsLessThan3([], 1)       // []
+dropsBankAccountsLessThan3([], 2)       // []
+dropsBankAccountsLessThan3([], 3)       // [3]
+dropsBankAccountsLessThan3([3], 2)      // [3, 2]
+dropsBankAccountsLessThan3([3, 2], 1)   // [3, 2, 1]
+```
+
+::: warning
+Once a given predicate returns `false` it accepts any other values
+
+It you want a different behaviour, have a look at [`filterT`](#filtert) or [`takeWhileT`](#takewhilet)
+:::
+
 ## `either`
 
 Checks if at least one of functions is `true` for arguments
@@ -4085,7 +4111,7 @@ updateBankAccount([1, 2], 1)  // [1, 2]
 ::: warning
 Once a given predicate returns `false` it doesn't accept any other values
 
-It you want a different behaviour, have a look at [`filterT`](#filtert)
+It you want a different behaviour, have a look at [`dropWhileT`](#dropwhilet) [`filterT`](#filtert)
 :::
 
 ## `tap`
